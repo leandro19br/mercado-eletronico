@@ -29,8 +29,8 @@ public class StatusPedidoController {
 
     @PostMapping
     public ResponseEntity<StatusPedidoDto> alterarStatusPedido(@RequestBody @Valid StatusPedidoForm statusPedidoForm) {
-        statusPedidoService.alteraStatusPedido(statusPedidoForm);
-        return null;
+        StatusPedidoDto statusPedidoDto = statusPedidoService.alteraStatusPedido(statusPedidoForm);
+        return ResponseEntity.ok(statusPedidoDto);
     }
 
 }

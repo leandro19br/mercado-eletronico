@@ -34,16 +34,18 @@ public class StatusPedidoServiceImpl implements StatusPedidoService {
         StatusPedidoDto statusPedidoDto = new StatusPedidoDto();
 
         if (!pedido.equals(null)) {
-            if (statusPedidoForm.getItensAprovados().equals(pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().equals(pedido.getValorTotalPedido())) {
-                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO);
-            }else if (statusPedidoForm.getItensAprovados().equals(pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().equals(pedido.getValorTotalPedido())){
-                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_VALOR_A_MENOR);
-            }else if (statusPedidoForm.getItensAprovados() > (pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().equals(pedido.getValorTotalPedido())){
-                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_QTD_A_MENOR);
-            }else if (statusPedidoForm.getItensAprovados().equals(pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().equals(pedido.getValorTotalPedido())){
-                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_VALOR_A_MAIOR);
-            }else if (statusPedidoForm.getItensAprovados().equals(pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().equals(pedido.getValorTotalPedido())){
-                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_QTD_A_MAIOR);
+            if (statusPedidoForm.getStatus() == StatusPedidoEnun.REPROVADO ){
+                statusPedidoEnuns.add(StatusPedidoEnun.REPROVADO);//1 condição
+            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO  &&statusPedidoForm.getItensAprovados().equals(pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().compareTo(pedido.getValorTotalPedido())== 0) {
+                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO);//1 condição
+            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO && statusPedidoForm.getValorAprovado().compareTo(pedido.getValorTotalPedido()) == -1){
+                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_VALOR_A_MENOR);//2 condição
+            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO && statusPedidoForm.getItensAprovados() < (pedido.getquantidadeTotalPedido())){
+                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_QTD_A_MENOR);//3 condição
+            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO  && statusPedidoForm.getValorAprovado().compareTo(pedido.getValorTotalPedido()) == 1){
+                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_VALOR_A_MAIOR);//4 condição
+            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO && statusPedidoForm.getItensAprovados() > (pedido.getquantidadeTotalPedido())){
+                statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_QTD_A_MAIOR);//5 condição
             }
             statusPedidoDto.setPedido(statusPedidoForm.getPedido());
             statusPedidoDto.setStatus(statusPedidoEnuns);
