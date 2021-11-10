@@ -15,6 +15,9 @@ public class StatusPedidoDto {
     private Long pedido;
     private List<StatusPedidoEnun> status;
 
+    public StatusPedidoDto() {
+    }
+
     public static final class StatusPedidoDtoBuilder {
         private Long pedido;
         private List<StatusPedidoEnun> status;

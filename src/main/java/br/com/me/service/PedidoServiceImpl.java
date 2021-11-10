@@ -1,6 +1,7 @@
 package br.com.me.service;
 
 import br.com.me.dto.PedidoDto;
+import br.com.me.dto.form.PedidoForm;
 import br.com.me.model.Pedido;
 import br.com.me.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public PedidoDto save(PedidoDto pedidoDto) {
-        Pedido pedido = new Pedido(pedidoDto);
+    public PedidoDto save(PedidoForm pedidoForm) {
+        Pedido pedido = new Pedido(pedidoForm);
         Pedido PedidoSalvo = pedidoRepository.save(pedido);
         return new PedidoDto(PedidoSalvo);
     }

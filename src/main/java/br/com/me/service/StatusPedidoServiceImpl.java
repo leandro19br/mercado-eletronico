@@ -29,22 +29,22 @@ public class StatusPedidoServiceImpl implements StatusPedidoService {
 
     @Override
     public StatusPedidoDto alteraStatusPedido(StatusPedidoForm statusPedidoForm) {
-        Pedido pedido = pedidoRepository.findById(statusPedidoForm.getPedido()).get();
+        Optional<Pedido> pedido = pedidoRepository.findById(statusPedidoForm.getPedido());
         List<StatusPedidoEnun> statusPedidoEnuns = new ArrayList<>();
         StatusPedidoDto statusPedidoDto = new StatusPedidoDto();
 
-        if (!pedido.equals(null)) {
-            if (statusPedidoForm.getStatus() == StatusPedidoEnun.REPROVADO ){
+        if (pedido.isPresent()) {
+            if (statusPedidoForm.getStatus().equalsIgnoreCase(StatusPedidoEnun.REPROVADO.toString())){
                 statusPedidoEnuns.add(StatusPedidoEnun.REPROVADO);//1 condição
-            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO  &&statusPedidoForm.getItensAprovados().equals(pedido.getquantidadeTotalPedido()) && statusPedidoForm.getValorAprovado().compareTo(pedido.getValorTotalPedido())== 0) {
+            }else if (statusPedidoForm.getStatus().equalsIgnoreCase(StatusPedidoEnun.APROVADO.toString())  && statusPedidoForm.getItensAprovados().equals(pedido.map(Pedido::getItensPedido)) && statusPedidoForm.getValorAprovado().compareTo(pedido.map(Pedido::getValorTotalPedido).get())==0) {
                 statusPedidoEnuns.add(StatusPedidoEnun.APROVADO);//1 condição
-            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO && statusPedidoForm.getValorAprovado().compareTo(pedido.getValorTotalPedido()) == -1){
+            }else if (statusPedidoForm.getStatus().equalsIgnoreCase(StatusPedidoEnun.APROVADO.toString()) && statusPedidoForm.getValorAprovado().compareTo(pedido.map(Pedido::getValorTotalPedido).get()) == -1){
                 statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_VALOR_A_MENOR);//2 condição
-            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO && statusPedidoForm.getItensAprovados() < (pedido.getquantidadeTotalPedido())){
+            }else if (statusPedidoForm.getStatus().equalsIgnoreCase(StatusPedidoEnun.APROVADO.toString()) && statusPedidoForm.getItensAprovados() < (pedido.map(Pedido::getquantidadeTotalPedido).get())){
                 statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_QTD_A_MENOR);//3 condição
-            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO  && statusPedidoForm.getValorAprovado().compareTo(pedido.getValorTotalPedido()) == 1){
+            }else if (statusPedidoForm.getStatus().equalsIgnoreCase(StatusPedidoEnun.APROVADO.toString())  && statusPedidoForm.getValorAprovado().compareTo(pedido.map(Pedido::getValorTotalPedido).get()) == 1){
                 statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_VALOR_A_MAIOR);//4 condição
-            }else if (statusPedidoForm.getStatus() == StatusPedidoEnun.APROVADO && statusPedidoForm.getItensAprovados() > (pedido.getquantidadeTotalPedido())){
+            }else if (statusPedidoForm.getStatus().equalsIgnoreCase(StatusPedidoEnun.APROVADO.toString()) && statusPedidoForm.getItensAprovados() > (pedido.map(Pedido::getquantidadeTotalPedido).get())){
                 statusPedidoEnuns.add(StatusPedidoEnun.APROVADO_QTD_A_MAIOR);//5 condição
             }
             statusPedidoDto.setPedido(statusPedidoForm.getPedido());
@@ -54,7 +54,7 @@ public class StatusPedidoServiceImpl implements StatusPedidoService {
             statusPedidoEnuns.add(StatusPedidoEnun.CODIGO_PEDIDO_INVALIDO);
             statusPedidoDto.setPedido(statusPedidoForm.getPedido());
             statusPedidoDto.setStatus(statusPedidoEnuns);
-            throw new BadRequestExeception("Pedido com código inválido");
+
         }
 
         return statusPedidoDto;

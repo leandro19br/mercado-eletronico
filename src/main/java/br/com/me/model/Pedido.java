@@ -3,6 +3,7 @@ package br.com.me.model;
 
 import br.com.me.dto.ItemPedidoDto;
 import br.com.me.dto.PedidoDto;
+import br.com.me.dto.form.PedidoForm;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -41,6 +42,11 @@ public class Pedido {
         this.id = pedidoDto.getPedido();
         this.itensPedido = new ArrayList<>();
         this.itensPedido.addAll(pedidoDto.getItens().stream().map(ItemPedido::new).collect(Collectors.toList()));
+    }
+
+    public Pedido(PedidoForm pedidoForm) {
+        this.itensPedido = new ArrayList<>();
+        this.itensPedido.addAll(pedidoForm.getItens().stream().map(ItemPedido::new).collect(Collectors.toList()));
     }
 
     public Long getquantidadeTotalPedido() {

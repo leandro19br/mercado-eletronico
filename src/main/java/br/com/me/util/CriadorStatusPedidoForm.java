@@ -12,7 +12,7 @@ public class CriadorStatusPedidoForm {
     public static StatusPedidoForm criaStatusPedidoAprovado() {
         return StatusPedidoForm.StatusPedidoFormBuilder.newStatusPedidoForm()
                 .pedido(1L)
-                .status(StatusPedidoEnun.APROVADO)
+                .status("APROVADO")
                 .valorAprovado(new BigDecimal(20))
                 .itensAprovados(3L)
                 .build();
@@ -21,7 +21,7 @@ public class CriadorStatusPedidoForm {
     public static StatusPedidoForm criaStatusPedidoReprovado() {
         return StatusPedidoForm.StatusPedidoFormBuilder.newStatusPedidoForm()
                 .pedido(1L)
-                .status(StatusPedidoEnun.REPROVADO)
+                .status("REPROVADO")
                 .valorAprovado(new BigDecimal(20))
                 .itensAprovados(3L)
                 .build();

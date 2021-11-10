@@ -1,6 +1,7 @@
 package br.com.me.dto;
 
 import br.com.me.model.ItemPedido;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,13 +13,14 @@ import java.math.BigDecimal;
 @Data
 public class ItemPedidoDto {
 
-    private Long id;
     private String descricao;
     private BigDecimal precoUnitario;
     private Long quantidade;
 
+    public ItemPedidoDto() {
+    }
+
     public ItemPedidoDto(ItemPedido itemPedido) {
-        this.id = itemPedido.getId();
         this.descricao = itemPedido.getDescricao();
         this.precoUnitario = itemPedido.getPrecoUnitario();
         this.quantidade = itemPedido.getQuantidade();
@@ -26,7 +28,6 @@ public class ItemPedidoDto {
 
 
     public static final class ItemPedidoDtoBuilder {
-        private Long id;
         private String descricao;
         private BigDecimal precoUnitario;
         private Long quantidade;
@@ -36,11 +37,6 @@ public class ItemPedidoDto {
 
         public static ItemPedidoDtoBuilder newItemPedidoDto() {
             return new ItemPedidoDtoBuilder();
-        }
-
-        public ItemPedidoDtoBuilder id(Long id) {
-            this.id = id;
-            return this;
         }
 
         public ItemPedidoDtoBuilder descricao(String descricao) {
@@ -59,8 +55,7 @@ public class ItemPedidoDto {
         }
 
         public ItemPedidoDto build() {
-            ItemPedidoDto itemPedidoDto = new ItemPedidoDto(null);
-            itemPedidoDto.setId(id);
+            ItemPedidoDto itemPedidoDto = new ItemPedidoDto();
             itemPedidoDto.setDescricao(descricao);
             itemPedidoDto.setPrecoUnitario(precoUnitario);
             itemPedidoDto.setQuantidade(quantidade);

@@ -2,6 +2,7 @@ package br.com.me.dto.form;
 
 import br.com.me.enun.StatusPedidoEnun;
 import br.com.me.model.Pedido;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,18 +16,16 @@ import java.math.BigDecimal;
 @Data
 public class StatusPedidoForm {
 
-    @NotNull @NotBlank
-    private StatusPedidoEnun status;
-    @NotNull @NotBlank
+    private String status;
     private Long itensAprovados;
-    @NotNull @NotBlank
     private BigDecimal valorAprovado;
-    @NotNull @NotBlank
     private Long pedido;
 
+    public StatusPedidoForm() {
+    }
 
     public static final class StatusPedidoFormBuilder {
-        private StatusPedidoEnun status;
+        private String status;
         private Long itensAprovados;
         private BigDecimal valorAprovado;
         private Long pedido;
@@ -38,7 +37,7 @@ public class StatusPedidoForm {
             return new StatusPedidoFormBuilder();
         }
 
-        public StatusPedidoFormBuilder status(StatusPedidoEnun status) {
+        public StatusPedidoFormBuilder status(String status) {
             this.status = status;
             return this;
         }

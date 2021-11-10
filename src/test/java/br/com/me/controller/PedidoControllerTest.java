@@ -3,6 +3,7 @@ package br.com.me.controller;
 import br.com.me.dto.PedidoDto;
 import br.com.me.service.PedidoService;
 import br.com.me.util.CriadorPedidoDto;
+import br.com.me.util.CriadorPedidoForm;
 import br.com.me.util.CriadorProdutoDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +64,7 @@ class PedidoControllerTest {
 
     @Test
     void devesalvarPedidoquandoSucesso() {
-        PedidoDto pedido = pedidoServiceMock.save(CriadorPedidoDto.criaPedidoSalvo());
+        PedidoDto pedido = pedidoServiceMock.save(CriadorPedidoForm.criaPedidoAntesDeSalvar());
         Assertions.assertThat(pedido)
                 .isNotNull()
         .isEqualTo(CriadorPedidoDto.criaPedidoSalvo());

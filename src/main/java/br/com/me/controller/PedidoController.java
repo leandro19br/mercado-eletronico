@@ -1,6 +1,7 @@
 package br.com.me.controller;
 
 import br.com.me.dto.PedidoDto;
+import br.com.me.dto.form.PedidoForm;
 import br.com.me.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,8 @@ public class PedidoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<PedidoDto> salvar(@RequestBody @Valid PedidoDto pedidoDto, UriComponentsBuilder uriComponentsBuilder) {
-        PedidoDto pedidoDtoSalvo = pedidoService.save(pedidoDto);
-        return ResponseEntity.created(uriComponentsBuilder.path("/api/pedido/{id}").buildAndExpand(pedidoDtoSalvo.getPedido()).toUri()).build();
+    public ResponseEntity<PedidoDto> salvar(@RequestBody @Valid PedidoForm pedidoForm) {
+        return new ResponseEntity<PedidoDto>(pedidoService.save(pedidoForm), HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")

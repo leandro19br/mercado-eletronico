@@ -38,11 +38,16 @@ class StatusPedidoControllerTest {
     @BeforeEach
     void setup() {
         BDDMockito.when(statusPedidoServiceMock.alteraStatusPedido(CriadorStatusPedidoForm.criaStatusPedidoAprovado())).thenReturn(CriadorStatusPedidoDto.criaStatusPedidoAprovado());
-
+        BDDMockito.when(statusPedidoServiceMock.alteraStatusPedido(CriadorStatusPedidoForm.criaStatusPedidoReprovado())).thenReturn(CriadorStatusPedidoDto.criaStatusPedidoReprovado());
     }
 
     @Test
     void DevealterarStatusPedidoQuandoReprovado() {
+
+
+    }
+    @Test
+    void DevealterarStatusPedidoQuandoAprovado() {
 
 
     }

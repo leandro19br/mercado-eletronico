@@ -1,6 +1,7 @@
 package br.com.me.model;
 
 import br.com.me.dto.ItemPedidoDto;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,14 +27,12 @@ public class ItemPedido {
     }
 
     public ItemPedido(ItemPedido itemPedido) {
-        this.id = itemPedido.getId();
         this.descricao = itemPedido.getDescricao();
         this.precoUnitario = itemPedido.getPrecoUnitario();
         this.quantidade = itemPedido.getQuantidade();
     }
 
     public ItemPedido(ItemPedidoDto itemPedidoDto) {
-        this.id = itemPedidoDto.getId();
         this.descricao = itemPedidoDto.getDescricao();
         this.precoUnitario = itemPedidoDto.getPrecoUnitario();
         this.quantidade = itemPedidoDto.getQuantidade();
@@ -44,22 +43,17 @@ public class ItemPedido {
     }
 
     public static final class ItemPedidoBuilder {
-        private Long id;
         private String descricao;
         private BigDecimal precoUnitario;
         private Long quantidade;
         private Pedido pedido;
+        private BigDecimal valorTotalItem;
 
         private ItemPedidoBuilder() {
         }
 
         public static ItemPedidoBuilder newItemPedido() {
             return new ItemPedidoBuilder();
-        }
-
-        public ItemPedidoBuilder id(Long id) {
-            this.id = id;
-            return this;
         }
 
         public ItemPedidoBuilder descricao(String descricao) {
@@ -82,13 +76,18 @@ public class ItemPedido {
             return this;
         }
 
+        public ItemPedidoBuilder valorTotalItem(BigDecimal valorTotalItem) {
+            this.valorTotalItem = valorTotalItem;
+            return this;
+        }
+
         public ItemPedido build() {
             ItemPedido itemPedido = new ItemPedido();
-            itemPedido.setId(id);
             itemPedido.setDescricao(descricao);
             itemPedido.setPrecoUnitario(precoUnitario);
             itemPedido.setQuantidade(quantidade);
             itemPedido.setPedido(pedido);
+            itemPedido.setValorTotalItem(valorTotalItem);
             return itemPedido;
         }
     }
